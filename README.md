@@ -2,7 +2,7 @@
 
 REST API for workshop management built with **Java 21, Spring Boot and PostgreSQL**.
 
-The main engineering focus of this repository is the automation of the build, test, containerization and release lifecycle.
+The main engineering focus of this repository is the automation of the **build, test, containerization and release lifecycle**.
 
 ## 🛠️ Tech Stack
 
@@ -12,7 +12,7 @@ The main engineering focus of this repository is the automation of the build, te
 - Gradle 8.7
 - Docker / Docker Compose
 - GitHub Actions
-- GitHub Container Registry
+- GitHub Container Registry (GHCR)
 - semantic-release
 - Python automation scripts
 
@@ -37,83 +37,112 @@ python run-tests.py
 
 Or directly with Gradle:
 
+```bash
 ./gradlew clean test
-🐳 Docker
+```
+
+## 🐳 Docker
 
 The backend uses a multi-stage Docker build:
 
+```text
 Gradle + JDK 21 build stage
         ↓
 Spring Boot application build
         ↓
 Eclipse Temurin JRE 21 runtime
+```
 
 This keeps the final image focused on runtime dependencies.
 
 PostgreSQL is started through Docker Compose and includes a health check before the application starts.
 
-📦 Container Registry
+## 📦 Container Registry
 
-Docker images are automatically published to GitHub Container Registry (GHCR).
+Docker images are automatically published to **GitHub Container Registry (GHCR)**.
 
 The CI/CD workflow creates image tags associated with branches, commits and application releases.
 
-🚀 Automated Releases
+## 🚀 Automated Releases
 
-Releases from the main branch are managed with semantic-release.
+Releases from the main branch are managed with **semantic-release**.
 
 The release workflow:
 
-analyzes commit history
-determines the next semantic version
-creates a GitHub Release
-updates the changelog
-publishes a versioned Docker image
+- analyzes commit history
+- determines the next semantic version
+- creates a GitHub Release
+- updates the changelog
+- publishes a versioned Docker image
 
-🗄️ Database
+## 🗄️ Database
 
-The application uses PostgreSQL 16.
+The application uses **PostgreSQL 16**.
+
 Configuration is provided through Spring environment variables:
 
+```text
 SPRING_DATASOURCE_URL
 SPRING_DATASOURCE_USERNAME
 SPRING_DATASOURCE_PASSWORD
+```
 
-▶️ Run Locally
-Requirements
-Java 21
-Docker
-Git
+## ▶️ Run Locally
+
+### Requirements
+
+- Java 21
+- Docker
+- Git
 
 Compile:
 
+```bash
 ./gradlew clean compileJava
+```
+
 Run the application:
+
+```bash
 ./gradlew bootRun
+```
 
 API:
-http://localhost:8080
 
-🐳 Run with Docker Compose
+```text
+http://localhost:8080
+```
+
+## 🐳 Run with Docker Compose
 
 Start the API and PostgreSQL:
+
+```bash
 docker compose up -d
+```
 
 Stop:
-docker compose down
-Remove containers and persistent development data:
-docker compose down -v
 
-📌 Project Focus
+```bash
+docker compose down
+```
+
+Remove containers and persistent development data:
+
+```bash
+docker compose down -v
+```
+
+## 📌 Project Focus
 
 This repository demonstrates backend development and DevOps practices around a Spring Boot application:
 
-REST API development
-PostgreSQL integration
-automated testing
-reproducible Gradle builds
-Docker containerization
-CI/CD with GitHub Actions
-automated semantic versioning
-GitHub Releases
-container publishing to GHCR
+- REST API development
+- PostgreSQL integration
+- automated testing
+- reproducible Gradle builds
+- Docker containerization
+- CI/CD with GitHub Actions
+- automated semantic versioning
+- GitHub Releases
+- container publishing to GHCR
